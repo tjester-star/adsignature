@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Инверсия выделения текста — монохром, без цвета */
+::selection {
+  background: #171717;
+  color: #fafafa;
+}

@@ -1,0 +1,60 @@
+# ============================================================
+# Decap CMS. Вход на проде: https://<ваш-сайт>/admin/
+# ============================================================
+
+# Только для локальной разработки (npx decap-server), на прод игнорируется
+local_backend: true
+
+backend:
+  name: git-gateway # CMS коммитит в репозиторий через Netlify Identity
+  branch: main # основная ветка деплоя
+
+# Куда складываются фото товаров
+media_folder: "public/uploads"
+public_folder: "/uploads" # префикс URL в опубликованном сайте
+
+collections:
+  - name: "products" # внутреннее имя коллекции
+    label: "Товары" # название раздела в интерфейсе
+    folder: "content/products" # 1 файл .md = 1 товар
+    create: true # владелец может добавлять новые товары
+    slug: "{{slug}}" # имя файла генерируется из названия товара
+    sortable_fields: ["title", "status"]
+    editor:
+      preview: false
+
+    fields:
+      - label: "Название"
+        name: "title"
+        widget: "string"
+        required: true
+        hint: "Например: Худи на флисе"
+
+      - label: "Фотография"
+        name: "image"
+        widget: "image"
+        required: true
+
+      - label: "Статус"
+        name: "status"
+        widget: "select"
+        options: ["В наличии", "Предзаказ"]
+        default: "В наличии"
+        required: true
+
+      - label: "Доступные цвета"
+        name: "colors"
+        widget: "string"
+        required: false
+        hint: "Через запятую, например: Черный, Серый"
+
+      - label: "Краткое описание"
+        name: "description"
+        widget: "text"
+        required: false
+
+      - label: "Опубликовано"
+        name: "published"
+        widget: "boolean"
+        default: true
+        hint: "Выключите, чтобы скрыть товар с сайта"
